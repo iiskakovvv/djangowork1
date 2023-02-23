@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Результаты поиска{% endblock title %}
+
+{% block activeBlog %}active{% endblock activeBlog %}
+
+{% block body %}
+<style>
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+    }
+
+    .card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .btn:hover {
+
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    }
+</style>
+
+<div class="container my-4">
+    <h3><u>Результаты поиска: </u></h3>
+
+    {% if allPosts|length < 1 %} <p>Ваш поиск - <b>{{query}}</b> - не совпадает ни с одним документом.</p>
+
+        <strong>Предложения:</strong>
+
+        <ul>
+            <li>Убедитесь, что все слова написаны правильно.</li>
+            <li>Попробуйте разные ключевые слова.</li>
+            <li>Попробуйте использовать более общие ключевые слова.</li>
+        </ul>
+        {% endif %}
+        {% for post in allPosts %}
+        <div class="card my-4">
+            <div class="card-body">
+                <h5 class="card-title">{{post.title}} -by {{post.author}}</h5>
+                <p class="card-text">{{ post.timeStamp }}</p>
+                <hr class="solid">
+                <p class="card-text">{{post.text | truncatechars:500}}</p>
+                <a href="/blog/{{post.slug}}/" class="btn btn-primary">Читать дальше</a>
+            </div>
+        </div>
+        {% endfor %}
+
+</div>
+
+{% endblock body %}
